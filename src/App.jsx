@@ -57,8 +57,8 @@ function LowiOwl({size=80,wink=false,bounce=false}){
       <rect x="26" y="66" width="28" height="12" rx="3" fill="#161B22" stroke="#F0A500" strokeWidth="1.2"/>
       <text x="40" y="75.5" textAnchor="middle" fontSize="7" fontFamily="monospace" fill="#F0A500" fontWeight="bold">LOWI</text>
     </svg> function LowiChat({categories}){
-  const [open,setOpen]=useState(false);
-  const [msgs,setMsgs]=useState([{role:"assistant",text:"Hey! I'm Lowi 🦉 Ask me anything — should you buy now, wait, or make an offer?"}]);
+  
+  const [msgs,setMsgs]const [msgs,setMsgs]=useState([{role:"assistant",text:"Hey! I'm Lowi 🦉 Ask me anything — should you buy now, wait, or make an offer?"}]);useState([{role:"assistant",text:"Hey! I'm Lowi 🦉 Ask me anything — should you buy now, wait, or make an offer?"}]);
   const [input,setInput]=useState("");
   const [loading,setLoading]=useState(false);
   const [wink,setWink]=useState(false);
