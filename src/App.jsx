@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";.
 import { TrendingDown, TrendingUp, Minus, ChevronDown, Search, Tag, CreditCard, CheckCircle2, Clock, XCircle, X, Send } from "lucide-react";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
@@ -353,3 +353,4 @@ export default function App(){
   );
 }
 }
+
