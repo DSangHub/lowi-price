@@ -351,6 +351,5 @@ export default function App(){
       <LowiChat categories={categories}/>
     </div>
   );
-}
-}
+
 
