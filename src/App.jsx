@@ -5,16 +5,16 @@ const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
 const C = { bg:"#0D1117", surface:"#161B22", border:"#21262D", gold:"#F0A500", teal:"#39D0A8", text:"#E6EDF3", muted:"#8B949E", red:"#E05C5C" };
 
 const CATS = [
-  { id:"phone", name:"Smartphones", example:"iPhone 16 tier", retailers:[{name:"Amazon",price:799,shipping:0},{name:"Best Buy",price:829,shipping:0},{name:"Walmart",price:789,shipping:5}], history:[849,839,829,805,799,789] },
-  { id:"laptop", name:"Laptops", example:"14in ultrabook", retailers:[{name:"Amazon",price:699,shipping:0},{name:"Best Buy",price:679,shipping:0},{name:"Walmart",price:709,shipping:0}], history:[749,740,720,700,685,679] },
-  { id:"headphones", name:"Headphones", example:"Wireless ANC", retailers:[{name:"Amazon",price:249,shipping:0},{name:"Best Buy",price:279,shipping:0},{name:"Walmart",price:269,shipping:5}], history:[299,289,279,265,255,249] },
-  { id:"sneakers", name:"Sneakers", example:"Running shoe", retailers:[{name:"Amazon",price:110,shipping:0},{name:"Nike.com",price:130,shipping:0},{name:"Walmart",price:115,shipping:0}], history:[130,128,122,118,112,110] },
-  { id:"vacuum", name:"Robot Vacuums", example:"Self-empty", retailers:[{name:"Amazon",price:349,shipping:0},{name:"Best Buy",price:399,shipping:0},{name:"Walmart",price:359,shipping:0}], history:[449,429,399,379,365,349] },
-  { id:"tv", name:"TVs", example:"55in 4K QLED", retailers:[{name:"Amazon",price:799,shipping:0},{name:"Best Buy",price:749,shipping:0},{name:"Costco",price:729,shipping:0}], history:[899,870,820,780,750,729] },
-  { id:"blender", name:"Blenders", example:"High-power", retailers:[{name:"Amazon",price:129,shipping:0},{name:"Target",price:139,shipping:0},{name:"Walmart",price:119,shipping:0}], history:[119,119,122,119,119,119] },
-  { id:"mattress", name:"Mattresses", example:"Queen foam", retailers:[{name:"Amazon",price:449,shipping:0},{name:"Wayfair",price:499,shipping:0},{name:"Target",price:479,shipping:0}], history:[599,569,540,510,480,449] },
-  { id:"backpack", name:"Backpacks", example:"Laptop bag", retailers:[{name:"Amazon",price:49,shipping:0},{name:"REI",price:65,shipping:0},{name:"Walmart",price:45,shipping:0}], history:[55,53,50,48,46,45] },
-  { id:"coffee", name:"Coffee Makers", example:"Drip+grinder", retailers:[{name:"Amazon",price:89,shipping:0},{name:"Target",price:99,shipping:0},{name:"Walmart",price:84,shipping:0}], history:[79,82,85,84,84,84] },
+  { id:"phone", name:"Smartphones", example:"iPhone 16 tier", retailers:[{name:"Amazon",price:799,shipping:0},{name:"Best Buy",price:829,shipping:0},{name:"Walmart",price:789,shipping:5}], history:[...]}
+  { id:"laptop", name:"Laptops", example:"14in ultrabook", retailers:[{name:"Amazon",price:699,shipping:0},{name:"Best Buy",price:679,shipping:0},{name:"Walmart",price:709,shipping:0}], history:[74[...]]}
+  { id:"headphones", name:"Headphones", example:"Wireless ANC", retailers:[{name:"Amazon",price:249,shipping:0},{name:"Best Buy",price:279,shipping:0},{name:"Walmart",price:269,shipping:5}], histo[...]}
+  { id:"sneakers", name:"Sneakers", example:"Running shoe", retailers:[{name:"Amazon",price:110,shipping:0},{name:"Nike.com",price:130,shipping:0},{name:"Walmart",price:115,shipping:0}], history:[[...]]}
+  { id:"vacuum", name:"Robot Vacuums", example:"Self-empty", retailers:[{name:"Amazon",price:349,shipping:0},{name:"Best Buy",price:399,shipping:0},{name:"Walmart",price:359,shipping:0}], history:[...]}
+  { id:"tv", name:"TVs", example:"55in 4K QLED", retailers:[{name:"Amazon",price:799,shipping:0},{name:"Best Buy",price:749,shipping:0},{name:"Costco",price:729,shipping:0}], history:[899,870,820,[...]]}
+  { id:"blender", name:"Blenders", example:"High-power", retailers:[{name:"Amazon",price:129,shipping:0},{name:"Target",price:139,shipping:0},{name:"Walmart",price:119,shipping:0}], history:[119,1[...]]}
+  { id:"mattress", name:"Mattresses", example:"Queen foam", retailers:[{name:"Amazon",price:449,shipping:0},{name:"Wayfair",price:499,shipping:0},{name:"Target",price:479,shipping:0}], history:[59[...]]}
+  { id:"backpack", name:"Backpacks", example:"Laptop bag", retailers:[{name:"Amazon",price:49,shipping:0},{name:"REI",price:65,shipping:0},{name:"Walmart",price:45,shipping:0}], history:[55,53,50,[...]]}
+  { id:"coffee", name:"Coffee Makers", example:"Drip+grinder", retailers:[{name:"Amazon",price:89,shipping:0},{name:"Target",price:99,shipping:0},{name:"Walmart",price:84,shipping:0}], history:[79[...]]}
 ];
 
 function cheapestTotal(r){ return r.price+(r.shipping||0); }
@@ -125,12 +125,12 @@ function LowiChat({categories}){
   return(
     <div>
       {!open&&(
-        <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:24,right:24,zIndex:50,display:"flex",alignItems:"center",gap:8,padding:"8px 16px",borderRadius:999,background:C.gold,color:"#0D1117",fontWeight:700,fontSize:14,border:"none",cursor:"pointer",boxShadow:"0 4px 20px rgba(0,0,0,.4)"}}>
+        <button onClick={()=>setOpen(true)} style={{position:"fixed",bottom:24,right:24,zIndex:50,display:"flex",alignItems:"center",gap:8,padding:"8px 16px",borderRadius:999,background:C.gold,co[...]
           <LowiOwl size={36}/>Ask Lowi
         </button>
       )}
       {open&&(
-        <div style={{position:"fixed",bottom:0,right:0,zIndex:50,display:"flex",flexDirection:"column",width:"min(100vw,380px)",height:"min(100vh,520px)",background:C.surface,border:"1px solid "+C.border,borderRadius:"16px 16px 0 0",boxShadow:"0 24px 64px rgba(0,0,0,.6)"}}>
+        <div style={{position:"fixed",bottom:0,right:0,zIndex:50,display:"flex",flexDirection:"column",width:"min(100vw,380px)",height:"min(100vh,520px)",background:C.surface,border:"1px solid "+[...]
           <div style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",borderBottom:"1px solid "+C.border}}>
             <LowiOwl size={44} bounce={loading}/>
             <div style={{flex:1}}>
@@ -147,12 +147,12 @@ function LowiChat({categories}){
                 </div>
               </div>
             ))}
-            {loading&&<div style={{display:"flex",justifyContent:"flex-start"}}><div style={{background:C.bg,color:C.muted,padding:"8px 12px",borderRadius:16,fontSize:13}}>Lowi is thinking...</div></div>}
+            {loading&&<div style={{display:"flex",justifyContent:"flex-start"}}><div style={{background:C.bg,color:C.muted,padding:"8px 12px",borderRadius:16,fontSize:13}}>Lowi is thinking...</di[...]
             <div ref={bottom}/>
           </div>
           <div style={{padding:"12px 16px",borderTop:"1px solid "+C.border,display:"flex",gap:8}}>
-            <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask about a deal..." style={{flex:1,background:C.bg,border:"1px solid "+C.border,borderRadius:12,padding:"8px 12px",color:C.text,fontSize:13,outline:"none"}}/>
-            <button onClick={send} disabled={!input.trim()||loading} style={{background:input.trim()&&!loading?C.gold:"rgba(240,165,0,.25)",color:"#0D1117",border:"none",borderRadius:12,padding:"8px 12px",cursor:"pointer"}}><Send size={15}/></button>
+            <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask about a deal..." style={{flex:1,background:C.bg,border:"1px solid "[...]
+            <button onClick={send} disabled={!input.trim()||loading} style={{background:input.trim()&&!loading?C.gold:"rgba(240,165,0,.25)",color:"#0D1117",border:"none",borderRadius:12,padding:"[...]
           </div>
         </div>
       )}
@@ -183,7 +183,7 @@ function OfferFlow({bestPrice,sellerName,categoryName,onClose}){
     setError(null); setStage("creating");
     try{
       const token=await ensureAuth();
-      const res=await fetch(API_BASE+"/api/offers",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},body:JSON.stringify({sellerName,categoryName,amount:offer,listPrice:bestPrice})});
+      const res=await fetch(API_BASE+"/api/offers",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},body:JSON.stringify({sellerName,categoryName,amount:o[...]
       const d=await res.json();
       if(!res.ok) throw new Error(d.error||"Failed");
       setOfferId(d.offer.id); setStage("awaiting_hold");
@@ -198,7 +198,7 @@ function OfferFlow({bestPrice,sellerName,categoryName,onClose}){
         setStage("pending_seller");
         setTimeout(async()=>{
           const accept=offer>=bestPrice*0.85;
-          const r=await fetch(API_BASE+"/api/offers/"+offerId+"/respond",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+buyerToken},body:JSON.stringify({accept})});
+          const r=await fetch(API_BASE+"/api/offers/"+offerId+"/respond",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+buyerToken},body:JSON.stringify({accep[...]
           const rd=await r.json();
           setStage(rd.offer.status);
         },1600);
@@ -216,7 +216,7 @@ function OfferFlow({bestPrice,sellerName,categoryName,onClose}){
           <div style={{display:"flex",alignItems:"center",gap:8,fontSize:14,color:C.gold,marginBottom:12}}><Tag size={14}/>Make an offer to {sellerName}</div>
           <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:12}}>
             <span style={{color:C.muted}}>$</span>
-            <input type="number" value={offer} onChange={e=>setOffer(Number(e.target.value))} style={{background:"transparent",border:"none",borderBottom:"1px solid "+C.border,fontSize:20,width:96,color:C.text,fontFamily:"monospace",outline:"none"}}/>
+            <input type="number" value={offer} onChange={e=>setOffer(Number(e.target.value))} style={{background:"transparent",border:"none",borderBottom:"1px solid "+C.border,fontSize:20,width:9[...]
             <span style={{fontSize:12,color:C.muted}}>listed ${bestPrice}</span>
           </div>
           <div style={{background:"rgba(240,165,0,.08)",borderRadius:8,padding:8,marginBottom:12,fontSize:12,color:C.muted,display:"flex",gap:8}}>
@@ -224,7 +224,7 @@ function OfferFlow({bestPrice,sellerName,categoryName,onClose}){
             Card held, not charged. Seller has 3 days to accept.
           </div>
           <div style={{display:"flex",gap:8}}>
-            <button onClick={submitOffer} style={{background:C.gold,color:"#0D1117",border:"none",borderRadius:8,padding:"6px 12px",fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",gap:6}}><CreditCard size={13}/>Authorize and send</button>
+            <button onClick={submitOffer} style={{background:C.gold,color:"#0D1117",border:"none",borderRadius:8,padding:"6px 12px",fontSize:13,cursor:"pointer",display:"flex",alignItems:"center"}}>
             <button onClick={onClose} style={{background:"transparent",color:C.muted,border:"none",borderRadius:8,padding:"6px 12px",fontSize:13,cursor:"pointer"}}>Cancel</button>
           </div>
         </div>
@@ -282,7 +282,7 @@ function CategoryRow({cat,isOpen,onToggle}){
             ))}
           </div>
           {!showOffer
-            ?<button onClick={()=>setShowOffer(true)} style={{display:"flex",alignItems:"center",gap:6,fontSize:12,marginTop:12,padding:"6px 12px",borderRadius:8,border:"1px solid rgba(240,165,0,.4)",background:"transparent",color:C.gold,cursor:"pointer"}}><Tag size={12}/>Make an offer</button>
+            ?<button onClick={()=>setShowOffer(true)} style={{display:"flex",alignItems:"center",gap:6,fontSize:12,marginTop:12,padding:"6px 12px",borderRadius:8,border:"1px solid rgba(240,165,0,.15)",background:"transparent",color:C.gold}}>Make an offer</button>
             :<OfferFlow bestPrice={bestTotal} sellerName={best.name} categoryName={cat.name} onClose={()=>setShowOffer(false)}/>
           }
         </div>
@@ -324,7 +324,7 @@ export default function App(){
             <div style={{fontSize:11,color:C.muted}}>Price smarter. Always.</div>
           </div>
         </div>
-        <div style={{fontSize:11,padding:"4px 8px",borderRadius:999,background:liveStatus==="live"?"rgba(57,208,168,.13)":"rgba(139,148,158,.1)",color:liveStatus==="live"?C.teal:C.muted,border:"1px solid "+(liveStatus==="live"?"rgba(57,208,168,.3)":"rgba(139,148,158,.2)")}}>
+        <div style={{fontSize:11,padding:"4px 8px",borderRadius:999,background:liveStatus==="live"?"rgba(57,208,168,.13)":"rgba(139,148,158,.1)",color:liveStatus==="live"?C.teal:C.muted,border:"1[...]
           {liveStatus==="loading"?"Connecting...":liveStatus==="live"?"Live prices":"Demo data"}
         </div>
       </nav>
@@ -336,7 +336,7 @@ export default function App(){
       <div style={{maxWidth:640,margin:"0 auto",padding:"0 24px 16px"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",borderRadius:12,background:C.surface,border:"1px solid "+C.border}}>
           <Search size={14} style={{color:C.muted}}/>
-          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search categories..." style={{background:"transparent",border:"none",outline:"none",flex:1,fontSize:14,color:C.text}}/>
+          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search categories..." style={{background:"transparent",border:"none",outline:"none",flex:1,fontSize:14,color:C.t[...]
         </div>
       </div>
       <div style={{maxWidth:640,margin:"0 auto",padding:"0 24px 96px"}}>
@@ -350,6 +350,5 @@ export default function App(){
       </div>
       <LowiChat categories={categories}/>
     </div>
-    }
-
-
+  );
+}
