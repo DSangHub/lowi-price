@@ -1,12 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LowisPice — Price Smarter. Always.</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LowisPrice — Price Smarter. Always.</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0D1117;--surface:#161B22;--border:#21262D;--gold:#F0A500;--teal:#39D0A8;--text:#E6EDF3;--muted:#8B949E;--red:#E05C5C}
+  body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border)}
+  .brand{display:flex;align-items:center;gap:12px}
+  .badge{font-size:11px;padding:4px 10px;border-radius:999px;background:rgba(139,148,158,.1);color:var(--muted);border:1px solid var(--border)}
+  .wrap{max-width:640px;margin:0 auto;padding:0 24px}
+  h1{font-size:28px;font-weight:700;letter-spacing:-.5px;margin:0 0 8px}
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+  .sub{font-size:14px;color:var(--muted)}
+  .search{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--border)}
+  .search input{background:transparent;border:none;outline:none;flex:1;font-size:14px;color:var(--text)}
+  .list{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .row{border-bottom:1px solid var(--border)}
+  .row:last-child{border-bottom:none}
+  .rowhead{width:100%;display:flex;align-items:center;gap:14px;padding:16px 14px;text-align:left;background:none;border:none;color:var(--text);cursor:pointer}
+  .rowhead:hover{background:#1a1f28}
+  .cname{font-size:15px;font-weight:600}
+  .cex{font-size:12px;color:var(--muted);margin-left:8px}
+  .verdict{display:flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid;flex-shrink:0;white-space:nowrap}
+  .price{text-align:right;flex-shrink:0;width:78px}
+  .price .p{font-size:15px}
+  .price .r{font-size:11px;color:var(--muted)}
+  .chev{color:var(--muted);transition:transform .2s;flex-shrink:0}
+  .open .chev{transform:rotate(180deg)}
+  .detail{padding:4px 14px 16px}
+  .note{border-radius:8px;padding:12px;margin-bottom:12px;font-size:13px;border:1px solid}
+  .rline{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:6px 10px;border-radius:6px}
+  .rline.best{background:rgba(240,165,0,.07)}
+  .tag{margin-left:8px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+  .offer{margin-top:12px;display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid rgba(240,165,0,.4);background:transparent;color:var(--gold);cursor:pointer}
+  footer{font-size:11px;text-align:center;color:rgba(139,148,158,.55);padding:16px 0 96px}
+  /* chat */
+  #fab{position:fixed;bottom:24px;right:24px;z-index:50;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(--gold);color:#0D1117;font-weight:700;font-size:14px;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(240,165,0,.35)}
+  #panel{position:fixed;bottom:0;right:0;z-index:50;display:none;flex-direction:column;width:min(100vw,380px);height:min(100vh,520px);background:var(--surface);border:1px solid var(--border);box-shadow:0 24px 64px rgba(0,0,0,.6)}
+  @media(min-width:640px){#panel{bottom:24px;right:24px;border-radius:16px}}
+  .phead{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border)}
+  .pbody{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:85%;padding:8px 12px;border-radius:16px;font-size:13px;line-height:1.5}
+  .msg.a{align-self:flex-start;background:var(--bg);color:var(--text)}
+  .msg.u{align-self:flex-end;background:var(--gold);color:#0D1117}
+  .pfoot{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px}
+  .pfoot input{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:8px 12px;font-size:13px;outline:none}
+  .pfoot button{background:var(--gold);color:#0D1117;border:none;border-radius:12px;padding:0 14px;cursor:pointer;font-weight:700}
+  .iconbtn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px}
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">
+    <span id="owl1"></span>
+    <div>
+      <div style="font-weight:700;font-size:18px;color:var(--gold)">LowisPrice</div>
+      <div style="font-size:11px;color:var(--muted)">Price smarter. Always.</div>
+    </div>
+  </div>
+  <span class="badge">Demo data</span>
+</nav>
+
+<div class="wrap" style="padding-top:32px;padding-bottom:16px">
+  <div class="eyebrow">Top e-commerce categories</div>
+  <h1>Every price tracked. Lowi tells you when to buy.</h1>
+  <p class="sub">Real-time price comparison plus a 3-day guaranteed-offer system. Make an offer below list price — only charged if the seller accepts.</p>
+</div>
+
+<div class="wrap" style="padding-bottom:16px">
+  <div class="search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="search" placeholder="Search categories..."/>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="list" id="list"></div>
+  <footer>LowisPrice.com · Prices updated every 30 min · Offers guaranteed by Stripe card holds</footer>
+</div>
+
+<button id="fab"><span id="owl2"></span> Ask Lowi</button>
+<div id="panel">
+  <div class="phead">
+    <span id="owl3"></span>
+    <div style="flex:1">
+      <div style="font-weight:700;color:var(--gold);font-size:15px">Lowi</div>
+      <div style="font-size:11px;color:var(--muted)">Your price-savvy AI owl</div>
+    </div>
+    <button class="iconbtn" id="closeChat">✕</button>
+  </div>
+  <div class="pbody" id="pbody"></div>
+  <div class="pfoot">
+    <input id="chatInput" placeholder="Ask about a deal…"/>
+    <button id="chatSend">➤</button>
+  </div>
+</div>
+
+<script>
+const C={bg:"#0D1117",gold:"#F0A500",teal:"#39D0A8",text:"#E6EDF3",muted:"#8B949E",red:"#E05C5C"};
+const CATS=[
+ {id:"phone",name:"Smartphones",example:"iPhone 16 tier",retailers:[{name:"Amazon",price:799,shipping:0},{name:"Best Buy",price:829,shipping:0},{name:"Walmart",price:789,shipping:5},{name:"Target",price:819,shipping:0}],history:[849,839,829,805,799,789]},
+ {id:"laptop",name:"Laptops",example:'14" ultrabook',retailers:[{name:"Amazon",price:699,shipping:0},{name:"Best Buy",price:679,shipping:0},{name:"Newegg",price:689,shipping:8},{name:"Walmart",price:709,shipping:0}],history:[749,740,720,700,685,679]},
+ {id:"headphones",name:"Headphones",example:"Wireless ANC",retailers:[{name:"Amazon",price:249,shipping:0},{name:"Best Buy",price:279,shipping:0},{name:"Target",price:259,shipping:0},{name:"Walmart",price:269,shipping:5}],history:[299,289,279,265,255,249]},
+ {id:"sneakers",name:"Sneakers",example:"Running shoe",retailers:[{name:"Amazon",price:110,shipping:0},{name:"Nike.com",price:130,shipping:0},{name:"Foot Locker",price:120,shipping:6},{name:"Walmart",price:115,shipping:0}],history:[130,128,122,118,112,110]},
+ {id:"vacuum",name:"Robot Vacuums",example:"Self-empty model",retailers:[{name:"Amazon",price:349,shipping:0},{name:"Best Buy",price:399,shipping:0},{name:"Target",price:379,shipping:0},{name:"Walmart",price:359,shipping:0}],history:[449,429,399,379,365,349]},
+ {id:"tv",name:"TVs",example:'55" 4K QLED',retailers:[{name:"Amazon",price:799,shipping:0},{name:"Best Buy",price:749,shipping:0},{name:"Walmart",price:769,shipping:0},{name:"Costco",price:729,shipping:0}],history:[899,870,820,780,750,729]},
+ {id:"blender",name:"Blenders",example:"High-power countertop",retailers:[{name:"Amazon",price:129,shipping:0},{name:"Target",price:139,shipping:0},{name:"Walmart",price:119,shipping:0},{name:"Williams Sonoma",price:159,shipping:0}],history:[119,119,122,119,119,119]},
+ {id:"mattress",name:"Mattresses",example:"Queen memory-foam",retailers:[{name:"Amazon",price:449,shipping:0},{name:"Wayfair",price:499,shipping:0},{name:"Target",price:479,shipping:0},{name:"Mattress Firm",price:549,shipping:0}],history:[599,569,540,510,480,449]},
+ {id:"backpack",name:"Backpacks",example:"Everyday laptop bag",retailers:[{name:"Amazon",price:49,shipping:0},{name:"REI",price:65,shipping:0},{name:"Target",price:55,shipping:0},{name:"Walmart",price:45,shipping:0}],history:[55,53,50,48,46,45]},
+ {id:"coffee",name:"Coffee Makers",example:"Drip w/ grinder",retailers:[{name:"Amazon",price:89,shipping:0},{name:"Target",price:99,shipping:0},{name:"Walmart",price:84,shipping:0},{name:"Best Buy",price:94,shipping:0}],history:[79,82,85,84,84,84]}
+];
+const tones={good:{bg:"rgba(57,208,168,.13)",border:"rgba(57,208,168,.4)",text:C.teal},warn:{bg:"rgba(240,165,0,.13)",border:"rgba(240,165,0,.4)",text:C.gold},neutral:{bg:"rgba(139,148,158,.1)",border:"rgba(139,148,158,.3)",text:C.muted}};
+const total=r=>r.price+(r.shipping||0);
+function verdict(h,best){const rec=h.slice(-3);const tr=rec.length>=2?rec[rec.length-1]-rec[0]:0;const low=Math.min(...h);
+ if(best<=low+1&&tr<=0)return{label:"Buy now",tone:"good",note:"Lowest tracked price — and still falling."};
+ if(best<=low+1)return{label:"Buy now",tone:"good",note:"At its lowest tracked price."};
+ if(tr>10)return{label:"Buy soon",tone:"warn",note:"Trending up — could keep rising."};
+ if(tr<-5)return{label:"Worth waiting",tone:"neutral",note:"Still trending down."};
+ return{label:"Fair price",tone:"neutral",note:"Roughly stable recently."};}
+function owl(size){return `<svg width="${size}" height="${size}" viewBox="0 0 80 80" style="filter:drop-shadow(0 4px 14px rgba(240,165,0,.35))">
+ <ellipse cx="40" cy="50" rx="26" ry="24" fill="#F0A500"/><ellipse cx="40" cy="56" rx="15" ry="14" fill="#FDD86A" opacity=".7"/>
+ <ellipse cx="16" cy="54" rx="9" ry="16" fill="#C97F00" transform="rotate(-15 16 54)"/><ellipse cx="64" cy="54" rx="9" ry="16" fill="#C97F00" transform="rotate(15 64 54)"/>
+ <circle cx="40" cy="28" r="20" fill="#F0A500"/><polygon points="28,12 22,2 34,9" fill="#C97F00"/><polygon points="52,12 58,2 46,9" fill="#C97F00"/>
+ <ellipse cx="40" cy="30" rx="14" ry="13" fill="#FDD86A" opacity=".6"/>
+ <ellipse cx="33" cy="26" rx="6" ry="6" fill="white"/><ellipse cx="33" cy="27" rx="4" ry="5" fill="#1a1a2e"/><circle cx="34.5" cy="25.5" r="1.2" fill="white" opacity=".8"/>
+ <ellipse cx="47" cy="26" rx="6" ry="6" fill="white"/><ellipse cx="47" cy="27" rx="4" ry="5" fill="#1a1a2e"/><circle cx="48.5" cy="25.5" r="1.2" fill="white" opacity=".8"/>
+ <polygon points="40,31 36,36 44,36" fill="#E07800"/><rect x="26" y="66" width="28" height="12" rx="3" fill="#161B22" stroke="#F0A500" stroke-width="1.2"/>
+ <text x="40" y="75.5" text-anchor="middle" font-size="7" font-family="monospace" fill="#F0A500" font-weight="bold">LOWI</text></svg>`;}
+document.getElementById("owl1").innerHTML=owl(44);
+document.getElementById("owl2").innerHTML=owl(30);
+document.getElementById("owl3").innerHTML=owl(40);
+
+let query="",openId="phone";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function render(){
+ const q=query.trim().toLowerCase();
+ const rows=CATS.filter(c=>!q||c.name.toLowerCase().includes(q));
+ const list=document.getElementById("list");
+ if(!rows.length){list.innerHTML='<div style="padding:48px;text-align:center;color:'+C.muted+'">No categories match your search.</div>';return;}
+ list.innerHTML=rows.map(c=>{
+  const sorted=[...c.retailers].sort((a,b)=>total(a)-total(b));
+  const best=sorted[0],bt=total(best),v=verdict(c.history,bt),t=tones[v.tone],open=c.id===openId;
+  const rl=sorted.map((r,i)=>`<div class="rline${i===0?' best':''}"><span style="color:${i===0?C.gold:C.muted}">${esc(r.name)}${i===0?'<span class="tag">best</span>':''}</span><span class="mono" style="color:${C.text}">$${r.price}${r.shipping>0?' +$'+r.shipping+' ship':''}</span></div>`).join("");
+  return `<div class="row${open?' open':''}">
+    <button class="rowhead" data-id="${c.id}">
+     <div style="flex:1;min-width:0"><span class="cname">${esc(c.name)}</span><span class="cex">${esc(c.example)}</span></div>
+     <div class="verdict" style="background:${t.bg};border-color:${t.border};color:${t.text}">${v.label}</div>
+     <div class="price"><div class="p mono">$${bt}</div><div class="r">${esc(best.name)}</div></div>
+     <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    ${open?`<div class="detail">
+      <div class="note" style="background:${t.bg};border-color:${t.border};color:${t.text}">🦉 Lowi says: ${esc(v.note)}</div>
+      ${rl}
+      <button class="offer">🏷️ Make an offer</button>
+    </div>`:''}
+  </div>`;}).join("");
+ list.querySelectorAll(".rowhead").forEach(b=>b.onclick=()=>{openId=openId===b.dataset.id?null:b.dataset.id;render();});
+ list.querySelectorAll(".offer").forEach(b=>b.onclick=()=>alert("Guaranteed offers use a Stripe card hold — connect the backend (server.js) to enable live offers."));
+}
+document.getElementById("search").oninput=e=>{query=e.target.value;render();};
+render();
+
+// ── Lowi chat ──
+const panel=document.getElementById("panel"),pbody=document.getElementById("pbody");
+let msgs=[{role:"assistant",text:"Hey! I'm Lowi 🦉 Ask me anything — should you buy now, wait for a deal, or make an offer? I know every price on this page."}];
+let loading=false;
+function draw(){pbody.innerHTML=msgs.map(m=>`<div class="msg ${m.role==="user"?"u":"a"}">${esc(m.text)}</div>`).join("")+(loading?'<div class="msg a" style="color:'+C.muted+'">Lowi is thinking…</div>':'');pbody.scrollTop=pbody.scrollHeight;}
+draw();
+document.getElementById("fab").onclick=()=>{panel.style.display="flex";document.getElementById("fab").style.display="none";};
+document.getElementById("closeChat").onclick=()=>{panel.style.display="none";document.getElementById("fab").style.display="flex";};
+async function send(){
+ const inp=document.getElementById("chatInput");const q=inp.value.trim();if(!q||loading)return;
+ inp.value="";msgs.push({role:"user",text:q});loading=true;draw();
+ const ctx=CATS.map(c=>{const s=[...c.retailers].sort((a,b)=>total(a)-total(b))[0];const v=verdict(c.history,total(s));return `${c.name}: best $${total(s)} at ${s.name} — ${v.label}`;}).join("\n");
+ try{
+  const res=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs.map(m=>({role:m.role,content:m.text})),context:ctx})});
+  const data=await res.json();
+  msgs.push({role:"assistant",text:data.text||data.error||"Hmm, I couldn't get an answer. Try again!"});
+ }catch{msgs.push({role:"assistant",text:"Sorry, I couldn't reach my brain right now. Try again in a moment!"});}
+ loading=false;draw();
+}
+document.getElementById("chatSend").onclick=send;
+document.getElementById("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")send();});
+</script>
+</body>
 </html>
